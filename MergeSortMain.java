@@ -1,12 +1,13 @@
+
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 
 
 
-public class HomeScreen extends JPanel{
+public class MergeSortMain extends JPanel{
     
-    public HomeScreen()
+    public MergeSortMain()
 	{
         //setting size to whatever the window size is, and making it visible
 		setSize(Main.width, Main.height);

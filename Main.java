@@ -17,9 +17,14 @@ public class Main
         Container c  = j.getContentPane();
         c.setLayout(new CardLayout());
 
+        //adding sort screen
+        Sorts s = new Sorts();
+        c.add(s, "SortScreen");
         //adding home screen to continer
         HomeScreen h = new HomeScreen();
         c.add(h, "HomeScreen");
+
+       
         
         //making the frame be the correct size visible, exitable
         j.setSize(width, height);

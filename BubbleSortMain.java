@@ -4,9 +4,9 @@ import javax.swing.*;
 
 
 
-public class HomeScreen extends JPanel{
+public class BubbleSortMain extends JPanel{
     
-    public HomeScreen()
+    public BubbleSortMain()
 	{
         //setting size to whatever the window size is, and making it visible
 		setSize(Main.width, Main.height);
