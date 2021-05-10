@@ -3,6 +3,8 @@ import java.util.*;
 import javax.swing.*;
 
 
+
+
 public class Main
 {
     //setting width and height variables as public so we can acess them from other files to resize the screen based on screen width and height
@@ -10,13 +12,17 @@ public class Main
     public static int height = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
     public static void main(String[] args) 
     {
-        //creating frame
+        //creating frame + layout so we can switch between frames
         JFrame j = new JFrame(); 
-        //adding home screen and setting size
+        Container c  = j.getContentPane();
+        c.setLayout(new CardLayout());
+
+        //adding home screen to continer
         HomeScreen h = new HomeScreen();
+        c.add(h, "HomeScreen");
+        
+        //making the frame be the correct size visible, exitable
         j.setSize(width, height);
-        j.add(h);
-        //making the frame be seen and exitable
         j.setVisible(true);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     }
