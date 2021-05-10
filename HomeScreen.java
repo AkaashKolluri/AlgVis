@@ -12,11 +12,10 @@ public class HomeScreen extends JPanel{
 		setSize(Main.width, Main.height);
 		setVisible(true);
         JButton b = new JButton("Sorts");
-        b.setBounds(50,50,200,50);
         add(b);
 
-        //add(new JButton("Trees"));
-        // add(new JButton("Paths"));
+        add(new JButton("Trees"));
+        add(new JButton("Paths"));
 	}
 	
 	public void paintComponent(Graphics g)
