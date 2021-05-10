@@ -20,6 +20,6 @@ public class Sorts extends JTabbedPane{
         this.addTab("Insertion Sort", null, i, "hey");
         this.addTab("Selection Sort", null, s, "hey");
         this.addTab("Merge Sort", null, m, "hey");
-        this.addTab("Qucik Sort", null, q, "hey");
+        this.addTab("Quick Sort", null, q, "hey");
 	}
 }

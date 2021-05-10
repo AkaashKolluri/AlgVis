@@ -18,11 +18,14 @@ public class Main
         c.setLayout(new CardLayout());
 
         //adding sort screen
+        HomeScreen h = new HomeScreen();
+        c.add(h, "HomeScreen");
+
+        
         Sorts s = new Sorts();
         c.add(s, "SortScreen");
         //adding home screen to continer
-        HomeScreen h = new HomeScreen();
-        c.add(h, "HomeScreen");
+       
 
        
         
