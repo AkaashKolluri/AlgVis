@@ -5,10 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-
-
-
-public class HomeScreen extends JPanel{
+public class HomeScreen extends JPanel
+{
     
     public HomeScreen()
 	{
@@ -19,29 +17,27 @@ public class HomeScreen extends JPanel{
         //Creating a button, then making it switch screens when pressed, then adding to the frame
         //Button for sorts
         JButton s = new JButton("Sorts");
-        s.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent event) {
+        s.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent event) 
+            {
                 Main.switchScreen("SortScreen");
-            }
-          
-          });
+            }  
+        });
         add(s);
 
         //Button for trees
         JButton t = new JButton("Trees");
-        t.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent event) {
+        t.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent event) 
+            {
                 Main.switchScreen("TreeScreen");
             }
-          
-          });
-
-
+        });
         add(t);
 
-        //button
+        //button for paths
         JButton p = new JButton("Paths");
         p.addActionListener(new ActionListener() {
 

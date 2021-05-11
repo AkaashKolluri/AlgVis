@@ -4,7 +4,8 @@ import javax.swing.*;
 
 
 
-public class BubbleSortMain extends JPanel{
+public class BubbleSortMain extends JPanel
+{
     
     public BubbleSortMain()
 	{

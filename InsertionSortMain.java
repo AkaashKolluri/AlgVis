@@ -4,7 +4,8 @@ import javax.swing.*;
 
 
 
-public class InsertionSortMain extends JPanel{
+public class InsertionSortMain extends JPanel
+{
     
     public InsertionSortMain()
 	{

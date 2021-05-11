@@ -5,8 +5,8 @@ import javax.swing.*;
 
 //sorts basically acts as a house for all of our differnt panels
 //We add all the differnt types of sorts, adn then this will return all of it.
-public class SortScreen extends JTabbedPane{
-    
+public class SortScreen extends JTabbedPane
+{
     public SortScreen()
 	{
         super();

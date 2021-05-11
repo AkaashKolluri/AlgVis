@@ -5,8 +5,8 @@ import javax.swing.*;
 
 
 
-public class QuickSortMain extends JPanel{
-    
+public class QuickSortMain extends JPanel
+{
     public QuickSortMain()
 	{
         //setting size to whatever the window size is, and making it visible

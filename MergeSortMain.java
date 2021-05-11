@@ -5,8 +5,8 @@ import javax.swing.*;
 
 
 
-public class MergeSortMain extends JPanel{
-    
+public class MergeSortMain extends JPanel
+{
     public MergeSortMain()
 	{
         //setting size to whatever the window size is, and making it visible

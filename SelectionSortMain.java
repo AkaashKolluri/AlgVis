@@ -5,8 +5,8 @@ import javax.swing.*;
 
 
 
-public class SelectionSortMain extends JPanel{
-    
+public class SelectionSortMain extends JPanel
+{
     public SelectionSortMain()
 	{
         //setting size to whatever the window size is, and making it visible
