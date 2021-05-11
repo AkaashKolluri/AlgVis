@@ -42,7 +42,7 @@ public class HomeScreen extends JPanel
         p.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
-                Main.switchScreen("SortScreen");
+                Main.switchScreen("PathScreen");
             }
           
           });

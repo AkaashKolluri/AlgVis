@@ -20,16 +20,20 @@ public class Main
 
         
         
-        //adding sort screen
+        //adding sort screens
         HomeScreen h = new HomeScreen();
         c.add(h, "HomeScreen");
 
         SortScreen s = new SortScreen();
         c.add(s, "SortScreen");
-        
 
         TreeScreen t = new TreeScreen();
         c.add(t, "TreeScreen");
+
+        PathScreen p = new PathScreen();
+        c.add(p, "PathScreen");
+
+
         //adding home screen to continer
     
         
