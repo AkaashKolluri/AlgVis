@@ -10,6 +10,7 @@ public class TreeScreen extends JPanel
     //declaring so we can acess in all methods
 	private JTextField dataInput;
 	private JButton ct;
+	private JButton delete;
 	private boolean treeExists;
 	private Queue<Integer> dataToInsert;
 	private String errorMessage;
@@ -38,6 +39,17 @@ public class TreeScreen extends JPanel
             }
           });
         add(ct);
+
+		delete = new JButton("Delete Tree");
+		delete.setEnabled(false);
+        delete.addActionListener(new ActionListener() 
+		{
+            public void actionPerformed(ActionEvent event) 
+			{
+                deleteTree();  
+            }
+          });
+        add(delete);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -48,9 +60,16 @@ public class TreeScreen extends JPanel
 
 		//displaying error message temporarily, if neccesary
 
-		//drawing tree
-		if(treeExists)
-			drawTree(g);
+
+		
+		if(treeExists && dataToInsert.size()>0)
+		{
+			//displaying elements to add
+			String display = "Elements to add: ";
+			for(int e: dataToInsert)
+				display += e+" ";
+			g.drawString(display, 500-display.length()*3, 50);
+		}
 
 		
 		
@@ -62,6 +81,10 @@ public class TreeScreen extends JPanel
 		//takes away the error message
 		errorMessage = null;
 
+		//make it deletable
+		delete.setEnabled(true);
+
+	
 		//making it so we can draw the tree
 		treeExists = true;
 		
@@ -77,11 +100,13 @@ public class TreeScreen extends JPanel
 		for(String e: inputs)
 		{
 			//sends error message if the data is entered incorrectly
-			if(!e.matches("\\d"))
+			if(!e.matches("\\d*"))
 			{
 				errorMessage = "Please enter only numbers";
-				treeExists = false;
-				dataToInsert = null;
+				
+				//deleting any partial tree we have
+				deleteTree();
+
 				//breaking the method
 				return;
 				
@@ -89,14 +114,28 @@ public class TreeScreen extends JPanel
 
 			dataToInsert.add(Integer.parseInt(e));
 		}
-
+		repaint();
 
 		//creating an intial BST so we can get height for spacing purposes
-		
 
 
 
 
+
+	}
+
+
+	private void deleteTree()
+	{
+		//clearing everything
+		treeExists = false;
+		dataToInsert = null;
+
+		//inactivating the button
+		delete.setEnabled(false);
+
+		//refreshing
+		repaint();
 	}
 
 
