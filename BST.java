@@ -1,21 +1,21 @@
 class BST
 {
-	private TreeNode root;
+	private MyNode root;
 
 	public BST()
 	{
 
 	}
 
-	public TreeNode getRoot()
+	public MyNode getRoot()
 	{
 		return root;
 	}
 
 	public void add(int v)
 	{
-		TreeNode temp = root;
-		TreeNode temp1 = root;
+		MyNode temp = root;
+		MyNode temp1 = root;
 		while(temp1!=null)
 		{
 			temp = temp1;
@@ -26,11 +26,11 @@ class BST
 		}
 
 		if(temp == null)
-			root = new TreeNode(v, null, null);
+			root = new MyNode(v, null, null);
 		else if(v<temp.getValue())
-			temp.setLeft(new TreeNode(v, null, null));
+			temp.setLeft(new MyNode(v, null, null));
 		else
-			temp.setRight(new TreeNode(v, null, null));
+			temp.setRight(new MyNode(v, null, null));
 	}
 
 	//method for public heigh access
@@ -41,7 +41,7 @@ class BST
 	}
 
 	//recurivse method
-	private int heightHelper(TreeNode t)
+	private int heightHelper(MyNode t)
 	{
 		if(t == null)
 			return 0;
@@ -52,47 +52,3 @@ class BST
 
 
 
-
-class TreeNode
-{
-	private int value;
-	private TreeNode right;
-	private TreeNode left;
-
-	public TreeNode(int v, TreeNode r, TreeNode l)
-	{
-		value = v;
-		right = r;
-		left = l;
-	}
-
-	public TreeNode getRight()
-	{
-		return right;
-	}
-
-	public TreeNode getLeft()
-	{
-		return left;
-	}
-
-	public int getValue()
-	{
-		return value;
-	}
-
-	public void setRight(TreeNode r)
-	{
-		right = r;
-	}
-
-	public void setLeft(TreeNode l)
-	{
-		left = l;
-	}
-
-	public void setValue(int v)
-	{
-		value = v;
-	}
-}

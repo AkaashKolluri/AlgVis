@@ -16,6 +16,13 @@ public class TreeScreen extends JPanel
 	private String errorMessage;
 	private BST intial;
 	private BST display;
+	private Graphics g;
+
+	private double boxSize;
+	private int starth;
+	private int startw;
+	private int h;
+	boolean startPaint;
 
     public TreeScreen()
 	{
@@ -57,6 +64,7 @@ public class TreeScreen extends JPanel
 	public void paintComponent(Graphics g)
 	{
 	
+		this.g = g;
         //should draw a black rectangle with 100 border 
 		g.setColor(Color.CYAN);
 		g.fillRect(100, 100, Main.width/20, Main.width/20);
@@ -75,14 +83,22 @@ public class TreeScreen extends JPanel
 			for(int e: dataToInsert)
 				display += e+" ";
 			g.drawString(display, Main.width/2-display.length()*6, 50);
-
 			
+		}
+
+		if(startPaint)
+		{
+			treePainter();
 		}
 
 		
 		
 	}
 
+	private void treePainter()
+	{
+		g.drawRect(10,10, startw, starth);
+	}
 
 	private void createTree()
 	{
@@ -127,11 +143,11 @@ public class TreeScreen extends JPanel
 			//adding to our intial bst so we can get the height
 			intial.add(Integer.parseInt(e));
 		}
-		repaint();
+		
 
 		//get height for spacing purposes
-		int h = Math.max(3,intial.height());
-		double boxSize = 0;
+		h = Math.max(3,intial.height());
+		boxSize = 0;
 		if(h==3)
 			boxSize = 1/15;
 
@@ -145,10 +161,12 @@ public class TreeScreen extends JPanel
 			boxSize = 1/40;
 
 
-		int starth = 60;
-		int startw = Main.width/2;
+		starth = 60;
+		startw = Main.width/2;
+
+		startPaint = true;
 		
-		
+		repaint();
 
 
 
