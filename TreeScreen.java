@@ -1,16 +1,21 @@
 import java.awt.*;
 import java.util.*;
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.Timer;
+import java.awt.event.*;
+import javax.imageio.*;
+import java.io.*;
 
 
-public class TreeScreen extends JPanel
+public class TreeScreen extends JPanel implements ActionListener
 {
     //declaring so we can acess in all methods
 	private JTextField dataInput;
+	
 	private JButton ct;
 	private JButton delete;
+	private JButton addNode;
 	private boolean treeExists;
 	private Queue<Integer> dataToInsert;
 	private String errorMessage;
@@ -22,14 +27,18 @@ public class TreeScreen extends JPanel
 	private int starth;
 	private int startw;
 	private int h;
-	boolean startPaint;
+	private boolean startPaint;
+
+	private Timer time;
+	private boolean timer = false;
 
     public TreeScreen()
 	{
+		time = new Timer(250, this);
         //setting size to whatever the window size is, and making it visible
 		setSize(Main.width, Main.height);
 		setVisible(true);
-
+		
 		//tree isn't made yet
 		treeExists = false;
 
@@ -37,17 +46,34 @@ public class TreeScreen extends JPanel
 		//adding input field
 		dataInput = new JTextField(20);
 		add(dataInput, BorderLayout.SOUTH);
-
+		
 		//adding a button that starts the code sequence
 		ct = new JButton("Create Tree");
         ct.addActionListener(new ActionListener() 
 		{
             public void actionPerformed(ActionEvent event) 
 			{
+				
                 createTree();  
+				time.start();
+				
             }
           });
         add(ct);
+
+
+		addNode = new JButton("Add nodes");
+        addNode.addActionListener(new ActionListener() 
+		{
+            public void actionPerformed(ActionEvent event) 
+			{
+				
+                addNode();
+				time.start();
+				
+            }
+          });
+        add(addNode);
 
 		delete = new JButton("Delete Tree");
 		delete.setEnabled(false);
@@ -79,8 +105,11 @@ public class TreeScreen extends JPanel
 			Font f = new Font ("Courier New", 1, 24);
 			g.setFont(f);
 			String display = "Elements to add: ";
-			for(int e: dataToInsert)
-				display += e+" ";
+			if(dataToInsert.size()<50)
+			{ 
+				for(int e: dataToInsert)
+					display += e+" ";
+			}
 			g.drawString(display, Main.width/2-display.length()*6, 50);
 			
 		}
@@ -88,6 +117,7 @@ public class TreeScreen extends JPanel
 		if(startPaint)
 		{
 			g.setColor(Color.BLACK);
+			
 			treePainter(g, startw, starth, 1, this.display.getRoot());
 		}
 
@@ -97,26 +127,28 @@ public class TreeScreen extends JPanel
 
 	private void treePainter(Graphics g, int sw, int sh, int level, MyNode r)
 	{
-		
-		System.out.println(sw+ " "+sh);
 		if(r == null)
 			return;
 		
 		//g.drawOval(sw, sh, (int)(boxSize*Main.width), (int)(boxSize*Main.width));
+		Font f = new Font ("Courier New", 1, 24);
+		g.setFont(f);
 		g.drawString(r.getValue()+"", sw, sh);
 
 		if(r.getRight() != null)
 		{
-			g.drawLine(sw, sh, (int)( sw+boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)));
+			g.drawLine(sw, sh, (int)( sw+boxSize*(Main.width-100)*Math.pow(2, h-level)), (int)(sh+(Main.height-100)/(h+1)));
 			//g.fillOval(sw, sh, (int)(boxSize*Main.width), (int)(boxSize*Main.width));
-			treePainter( g, (int)( sw+boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)), level+1, r.getRight());
+			treePainter( g, (int)( sw+boxSize*(Main.width-100)*Math.pow(2, h-level)), (int)(sh+(Main.height-100)/(h+1)), level+1, r.getRight());
 		}
+
+		//recrusive call for the right child
 
 		if(r.getLeft() != null)
 		{
-			g.drawLine(sw, sh, (int)( sw-boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)));
+			g.drawLine(sw, sh, (int)( sw-boxSize*(Main.width-100)*Math.pow(2, h-level)), (int)(sh+(Main.height-100)/(h+1)));
 			//g.fillOval(sw, sh, (int)(boxSize*Main.width), (int)(boxSize*Main.width));
-			treePainter(g,  (int)( sw-boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)), level+1, r.getLeft());
+			treePainter(g,  (int)( sw-boxSize*(Main.width-100)*Math.pow(2, h- level)), (int)(sh+(Main.height-100)/(h+1)), level+1, r.getLeft());
 		}
 
 	}
@@ -129,6 +161,7 @@ public class TreeScreen extends JPanel
 		//make it deletable and prevent new trees
 		delete.setEnabled(true);
 		ct.setEnabled(false);
+		addNode.setEnabled(true);
 
 	
 		//making it so we can draw the tree
@@ -165,6 +198,16 @@ public class TreeScreen extends JPanel
 			intial.add(Integer.parseInt(e));
 		}
 		
+		// int e = Integer.parseInt(inputs[0]);
+		// for(int i =e; i>0; i--)
+		// {
+		// 	for(int j =0; j<i; j++)
+		// 	{
+		// 		intial.add(i);
+		// 		dataToInsert.add(i);
+		// 	}
+		// }
+
 
 		//get height for spacing purposes
 		h = Math.max(3,intial.height());
@@ -179,20 +222,17 @@ public class TreeScreen extends JPanel
 			boxSize = 1.0/64;
 
 		else if(h==6)
-			boxSize = 1.0/64;
+			boxSize = 1.0/128;
 		else
-			boxSize = 1.0/64;
-
-		this.starth = 60;
-		this.startw = Main.width/2;
+			boxSize = 1.0/Math.pow(2,h+1);
 
 		display = new BST();
-		startPaint = true;
-		while(dataToInsert.size()>0)
-		{
-			display.add(dataToInsert.remove());
-			repaint();
-		}
+		this.starth = 90;
+		this.startw = Main.width/2;
+		timer= true;
+		repaint();
+		time.start();
+		
 		
 
 
@@ -203,6 +243,73 @@ public class TreeScreen extends JPanel
 
 	}
 
+
+	public void addNode()
+	{
+		String raw = dataInput.getText();
+		dataInput.setText("");
+		String[] inputs = raw.split("[ ,]+");
+		intial = new BST();
+		dataToInsert = new LinkedList<Integer>();
+		for(String e: inputs)
+		{
+			//sends error message if the data is entered incorrectly
+			if(!e.matches("\\d*"))
+			{
+				errorMessage = "Please enter only numbers";
+				return;
+				
+			}
+
+			//adding to a queue for the display tree
+			dataToInsert.add(Integer.parseInt(e));
+			//adding to our intial bst so we can get the height
+			intial.add(Integer.parseInt(e));
+		}
+		
+		// int e = Integer.parseInt(inputs[0]);
+		// for(int i =e; i>0; i--)
+		// {
+		// 	for(int j =0; j<i; j++)
+		// 	{
+		// 		intial.add(i);
+		// 		dataToInsert.add(i);
+		// 	}
+		// }
+
+
+		//get height for spacing purposes
+	
+		boolean resize = false;
+		if(intial.height()>h)
+		{
+		    resize = true;
+		}
+		h = intial.height();
+		boxSize = 0;
+		if(h<=3)
+			boxSize = 1.0/16;
+
+		else if(h==4)
+			boxSize = 1.0/32;
+		
+		else if(h==5)
+			boxSize = 1.0/64;
+
+		else if(h==6)
+			boxSize = 1.0/128;
+		else
+			boxSize = 1.0/Math.pow(2,h+1);
+
+		this.starth = 90;
+		this.startw = Main.width/2;
+
+		
+		startPaint = true;
+		timer= true;
+		
+	}
+
 	private int delaye(int t)
 	{
 		int x = 0;
@@ -211,10 +318,25 @@ public class TreeScreen extends JPanel
 		return x;
 	}
 
-	private void drawTree(Graphics g)
+	public void actionPerformed(ActionEvent e)
 	{
-
+		if(timer)
+		{
+			if(dataToInsert.size()>0)
+				display.add(dataToInsert.remove());
+			else
+			{
+				timer = false;
+				time.stop();
+			}
+			startPaint  = true;
+			repaint();
+		}
+		
+		
 	}
+
+	
 
 	private void deleteTree()
 	{
@@ -228,6 +350,8 @@ public class TreeScreen extends JPanel
 		h = 0;
 		starth = 0;
 		startw = 0;
+		timer = false;
+		time.stop();
 
 		//inactivating the button
 		delete.setEnabled(false);
@@ -240,9 +364,5 @@ public class TreeScreen extends JPanel
 
 	
 
-	private void delay(int ms)
-	{
-
-	}
 }
 
