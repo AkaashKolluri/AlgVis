@@ -4,7 +4,7 @@ class BST
 
 	public BST()
 	{
-
+        root = null;
 	}
 
 	public MyNode getRoot()

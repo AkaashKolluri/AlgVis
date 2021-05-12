@@ -63,11 +63,10 @@ public class TreeScreen extends JPanel
 	
 	public void paintComponent(Graphics g)
 	{
-	
 		this.g = g;
         //should draw a black rectangle with 100 border 
 		g.setColor(Color.CYAN);
-		g.fillRect(100, 100, Main.width/20, Main.width/20);
+		g.fillRect(0,0,Main.width, Main.height);
 
 		//displaying error message temporarily, if neccesary
 
@@ -88,16 +87,38 @@ public class TreeScreen extends JPanel
 
 		if(startPaint)
 		{
-			treePainter();
+			g.setColor(Color.BLACK);
+			treePainter(g, startw, starth, 1, this.display.getRoot());
 		}
 
 		
 		
 	}
 
-	private void treePainter()
+	private void treePainter(Graphics g, int sw, int sh, int level, MyNode r)
 	{
-		g.drawRect(10,10, startw, starth);
+		
+		System.out.println(sw+ " "+sh);
+		if(r == null)
+			return;
+		
+		//g.drawOval(sw, sh, (int)(boxSize*Main.width), (int)(boxSize*Main.width));
+		g.drawString(r.getValue()+"", sw, sh);
+
+		if(r.getRight() != null)
+		{
+			g.drawLine(sw, sh, (int)( sw+boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)));
+			//g.fillOval(sw, sh, (int)(boxSize*Main.width), (int)(boxSize*Main.width));
+			treePainter( g, (int)( sw+boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)), level+1, r.getRight());
+		}
+
+		if(r.getLeft() != null)
+		{
+			g.drawLine(sw, sh, (int)( sw-boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)));
+			//g.fillOval(sw, sh, (int)(boxSize*Main.width), (int)(boxSize*Main.width));
+			treePainter(g,  (int)( sw-boxSize*(Main.width-100)*Math.pow(2, h-level-1)), (int)(sh+(Main.height-100)/(h+1)), level+1, r.getLeft());
+		}
+
 	}
 
 	private void createTree()
@@ -148,25 +169,31 @@ public class TreeScreen extends JPanel
 		//get height for spacing purposes
 		h = Math.max(3,intial.height());
 		boxSize = 0;
-		if(h==3)
-			boxSize = 1/15;
+		if(h<=3)
+			boxSize = 1.0/16;
 
-		if(h==4)
-			boxSize = 1/20;
+		else if(h==4)
+			boxSize = 1.0/32;
 		
-		if(h==5)
-			boxSize = 1/25;
+		else if(h==5)
+			boxSize = 1.0/64;
 
-		if(h==6)
-			boxSize = 1/40;
+		else if(h==6)
+			boxSize = 1.0/64;
+		else
+			boxSize = 1.0/64;
 
+		this.starth = 60;
+		this.startw = Main.width/2;
 
-		starth = 60;
-		startw = Main.width/2;
-
+		display = new BST();
 		startPaint = true;
+		while(dataToInsert.size()>0)
+		{
+			display.add(dataToInsert.remove());
+			repaint();
+		}
 		
-		repaint();
 
 
 
@@ -176,6 +203,13 @@ public class TreeScreen extends JPanel
 
 	}
 
+	private int delaye(int t)
+	{
+		int x = 0;
+		for(double i = 0.001; i<t; i+=0.000001)
+			x++;
+		return x;
+	}
 
 	private void drawTree(Graphics g)
 	{
@@ -189,6 +223,11 @@ public class TreeScreen extends JPanel
 		dataToInsert = null;
 		intial = null;
 		display = null;
+		startPaint = false;
+		boxSize = 0;
+		h = 0;
+		starth = 0;
+		startw = 0;
 
 		//inactivating the button
 		delete.setEnabled(false);
