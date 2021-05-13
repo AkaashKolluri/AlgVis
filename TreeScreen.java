@@ -63,6 +63,7 @@ public class TreeScreen extends JPanel implements ActionListener
 
 
 		addNode = new JButton("Add nodes");
+		addNode.setEnabled(false);
         addNode.addActionListener(new ActionListener() 
 		{
             public void actionPerformed(ActionEvent event) 
@@ -210,7 +211,7 @@ public class TreeScreen extends JPanel implements ActionListener
 
 
 		//get height for spacing purposes
-		h = Math.max(3,intial.height());
+		this.h = Math.max(3,intial.height());
 		boxSize = 0;
 		if(h<=3)
 			boxSize = 1.0/16;
@@ -249,8 +250,9 @@ public class TreeScreen extends JPanel implements ActionListener
 		String raw = dataInput.getText();
 		dataInput.setText("");
 		String[] inputs = raw.split("[ ,]+");
-		intial = new BST();
-		dataToInsert = new LinkedList<Integer>();
+
+		timer = false;
+		time.stop();
 		for(String e: inputs)
 		{
 			//sends error message if the data is entered incorrectly
@@ -285,7 +287,7 @@ public class TreeScreen extends JPanel implements ActionListener
 		{
 		    resize = true;
 		}
-		h = intial.height();
+		this.h = intial.height();
 		boxSize = 0;
 		if(h<=3)
 			boxSize = 1.0/16;
@@ -356,6 +358,7 @@ public class TreeScreen extends JPanel implements ActionListener
 		//inactivating the button
 		delete.setEnabled(false);
 		ct.setEnabled(true);
+		addNode.setEnabled(false);
 
 		//refreshing
 		repaint();
