@@ -229,6 +229,9 @@ public class TreeScreen extends JPanel implements ActionListener
 		String[] inputs = raw.split("[ ,]+");
 		intial = new BST();
 		dataToInsert = new LinkedList<Integer>();
+		if(inputs.length == 0){
+			deleteTree();
+			return;}
 		for(String e: inputs)
 		{
 			//sends error message if the data is entered incorrectly

@@ -47,6 +47,20 @@ class BST
 			return 0;
 		return 1+Math.max(heightHelper(t.getRight()), heightHelper(t.getLeft()));
 	}
+
+    public void turnOff()
+    {
+        turnOffHelper(root);
+    }
+
+    private void turnOffHelper(MyNode r)
+    {
+        if(r==null)
+            return;
+        r.turnOff();
+        turnOffHelper(r.getRight());
+        turnOffHelper(r.getLeft());
+    }
 }
 
 
