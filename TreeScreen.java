@@ -16,6 +16,10 @@ public class TreeScreen extends JPanel implements ActionListener
 	private JButton ct;
 	private JButton delete;
 	private JButton addNode;
+	private JButton inOrder;
+	private JButton postOrder;
+	private JButton preOrder;
+	private JButton rOrder;
 	private boolean treeExists;
 	private Queue<Integer> dataToInsert;
 	private String errorMessage;
@@ -86,6 +90,53 @@ public class TreeScreen extends JPanel implements ActionListener
             }
           });
         add(delete);
+
+		preOrder = new JButton("preOrder Traversal");
+		preOrder.setEnabled(false);
+        preOrder.addActionListener(new ActionListener() 
+		{
+            public void actionPerformed(ActionEvent event) 
+			{
+                 
+            }
+          });
+        add(preOrder);
+
+
+		postOrder = new JButton("postOrder Traversal");
+		postOrder.setEnabled(false);
+        postOrder.addActionListener(new ActionListener() 
+		{
+            public void actionPerformed(ActionEvent event) 
+			{
+              
+            }
+          });
+        add(postOrder);
+
+
+		inOrder = new JButton("inOrder Traversal");
+		inOrder.setEnabled(false);
+        inOrder.addActionListener(new ActionListener() 
+		{
+            public void actionPerformed(ActionEvent event) 
+			{
+            
+            }
+          });
+        add(inOrder);
+
+
+		rOrder = new JButton("reverseOrder Traversal");
+		rOrder.setEnabled(false);
+        rOrder.addActionListener(new ActionListener() 
+		{
+            public void actionPerformed(ActionEvent event) 
+			{
+                
+            }
+          });
+        add(rOrder);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -250,7 +301,6 @@ public class TreeScreen extends JPanel implements ActionListener
 		String raw = dataInput.getText();
 		dataInput.setText("");
 		String[] inputs = raw.split("[ ,]+");
-
 		timer = false;
 		time.stop();
 		for(String e: inputs)
@@ -322,12 +372,22 @@ public class TreeScreen extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
+		
 		if(timer)
 		{
+			rOrder.setEnabled(false);
+			inOrder.setEnabled(false);
+			preOrder.setEnabled(false);
+			postOrder.setEnabled(false);
 			if(dataToInsert.size()>0)
 				display.add(dataToInsert.remove());
 			else
 			{
+				rOrder.setEnabled(true);
+				inOrder.setEnabled(true);
+				preOrder.setEnabled(true);
+				postOrder.setEnabled(true);
+
 				timer = false;
 				time.stop();
 			}
@@ -359,6 +419,10 @@ public class TreeScreen extends JPanel implements ActionListener
 		delete.setEnabled(false);
 		ct.setEnabled(true);
 		addNode.setEnabled(false);
+		rOrder.setEnabled(false);
+		inOrder.setEnabled(false);
+		preOrder.setEnabled(false);
+		postOrder.setEnabled(false);
 
 		//refreshing
 		repaint();
