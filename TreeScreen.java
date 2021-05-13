@@ -169,7 +169,11 @@ public class TreeScreen extends JPanel implements ActionListener
 		if(startPaint)
 		{
 			g.setColor(Color.BLACK);
-			
+			if(this.intial.getRoot() == null)
+			{
+				g.drawString("Empty Tree", Main.width/2-20,100);
+				System.out.println("hello");
+			}
 			treePainter(g, startw, starth, 1, this.display.getRoot());
 		}
 
@@ -209,6 +213,7 @@ public class TreeScreen extends JPanel implements ActionListener
 	{
 		//takes away the error message
 		errorMessage = null;
+		display = new BST();
 
 		//make it deletable and prevent new trees
 		delete.setEnabled(true);
@@ -229,9 +234,6 @@ public class TreeScreen extends JPanel implements ActionListener
 		String[] inputs = raw.split("[ ,]+");
 		intial = new BST();
 		dataToInsert = new LinkedList<Integer>();
-		if(inputs.length == 0){
-			deleteTree();
-			return;}
 		for(String e: inputs)
 		{
 			//sends error message if the data is entered incorrectly
@@ -246,12 +248,14 @@ public class TreeScreen extends JPanel implements ActionListener
 				return;
 				
 			}
-
+			if(e.matches("\\d+")){
 			//adding to a queue for the display tree
-			dataToInsert.add(Integer.parseInt(e));
+				dataToInsert.add(Integer.parseInt(e));
 			//adding to our intial bst so we can get the height
-			intial.add(Integer.parseInt(e));
+				intial.add(Integer.parseInt(e));}
 		}
+
+		
 		
 		// int e = Integer.parseInt(inputs[0]);
 		// for(int i =e; i>0; i--)
@@ -281,7 +285,7 @@ public class TreeScreen extends JPanel implements ActionListener
 		else
 			boxSize = 1.0/Math.pow(2,h+1);
 
-		display = new BST();
+		
 		this.starth = 90;
 		this.startw = Main.width/2;
 		timer= true;
@@ -301,11 +305,11 @@ public class TreeScreen extends JPanel implements ActionListener
 
 	public void addNode()
 	{
+		treeExists = true;
 		String raw = dataInput.getText();
 		dataInput.setText("");
 		String[] inputs = raw.split("[ ,]+");
-		timer = false;
-		time.stop();
+		
 		for(String e: inputs)
 		{
 			//sends error message if the data is entered incorrectly
@@ -362,16 +366,11 @@ public class TreeScreen extends JPanel implements ActionListener
 		
 		startPaint = true;
 		timer= true;
+		time.start();
 		
 	}
 
-	private int delaye(int t)
-	{
-		int x = 0;
-		for(double i = 0.001; i<t; i+=0.000001)
-			x++;
-		return x;
-	}
+	
 
 	public void actionPerformed(ActionEvent e)
 	{

@@ -33,8 +33,6 @@ public class Main
         PathScreen p = new PathScreen();
         c.add(p, "PathScreen");
 
-
-        //adding home screen to continer
     
         
         //making the frame be the correct size visible, exitable
