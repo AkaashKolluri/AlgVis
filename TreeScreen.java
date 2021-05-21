@@ -326,15 +326,7 @@ public class TreeScreen extends JPanel implements ActionListener
 			intial.add(Integer.parseInt(e));
 		}
 		
-		// int e = Integer.parseInt(inputs[0]);
-		// for(int i =e; i>0; i--)
-		// {
-		// 	for(int j =0; j<i; j++)
-		// 	{
-		// 		intial.add(i);
-		// 		dataToInsert.add(i);
-		// 	}
-		// }
+
 
 
 		//get height for spacing purposes
