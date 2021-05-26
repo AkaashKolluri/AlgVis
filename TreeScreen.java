@@ -1,13 +1,9 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
-
 import javax.swing.*;
 import javax.swing.Timer;
-import java.awt.event.*;
-
 import javax.swing.event.*;
-
-
 
 public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 {
@@ -23,13 +19,14 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 	private JButton preOrder;
 	private JButton rOrder;
 	private JSlider speed;
+
 	private boolean treeExists;
 	private Queue<Integer> dataToInsert;
 	private String errorMessage;
+
 	private BST intial;
 	private BST display;
-	private Graphics g;
-
+	
 	private double boxSize;
 	private int starth;
 	private int startw;
@@ -39,25 +36,22 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 	private Timer time;
 	private boolean timer = false;
 
-
 	private boolean isIn = false;
 	private boolean isPre = false;
 	private boolean isPost = false;
 	private boolean isRev = false;
+
 	private Queue<MyNode> traversalToShow;
 	private String traversalOrder = "";
 
     public TreeScreen()
 	{
-		
 		time = new Timer(400, this);
         //setting size to whatever the window size is, and making it visible
 		setSize(Main.width, Main.height);
 		setVisible(true);
-		
 		//tree isn't made yet
 		treeExists = false;
-
 		ex = new JButton("Exit");
 		ex.addActionListener(new ActionListener() 
 		{
@@ -170,18 +164,13 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 	
         add(rOrder);
 
-		speed = new JSlider(0,1000,250);
-		
+		speed = new JSlider(0,1000,250);	
 		speed.setMajorTickSpacing(200);
         speed.setMinorTickSpacing(200);
 		speed.setPaintTrack(true);
         speed.setPaintTicks(true);
         speed.setPaintLabels(true);
- 
-        // setChangeListener
         speed.addChangeListener(this);
-		
-	
 		add(speed);
 	}
 	
@@ -193,9 +182,7 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
     }
 
 	public void paintComponent(Graphics g)
-	{
-		this.g = g;
-        //should draw a black rectangle with 100 border 
+	{ 
 		Color c = new Color(181, 203, 235);
 		g.setColor(c);
 		g.fillRect(0,0,Main.width, Main.height);
@@ -203,10 +190,6 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 		Font f = new Font ("Helvetica", 1, 24);
 		g.setFont(f);
 		g.drawString(traversalOrder, Main.width/2-(int)(traversalOrder.length()*5.5), Main.height-50);
-
-		//displaying error message temporarily, if neccesary
-
-
 		
 		if(treeExists && dataToInsert.size()>0)
 		{
@@ -303,14 +286,7 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 			//sends error message if the data is entered incorrectly
 			if(!e.matches("-?\\d*"))
 			{
-				errorMessage = "Please enter only numbers";
-
-				//deleting any partial tree we have
-			
-
-				//breaking the method
-			
-				
+				errorMessage = "Please enter only numbers";				
 			}
 			else if(e.matches("-?\\d+")){
 			//adding to a queue for the display tree
@@ -318,11 +294,6 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 			//adding to our intial bst so we can get the height
 				intial.add(Integer.parseInt(e));}
 		}
-
-		
-	
-
-
 		//get height for spacing purposes
 		this.h = Math.max(3,intial.height());
 		boxSize = 0;
@@ -346,17 +317,7 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 		timer= true;
 		repaint();
 		time.start();
-		
-		
-
-
-
-
-
-
-
 	}
-
 
 	public void addNode()
 	{
@@ -380,10 +341,7 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 			intial.add(Integer.parseInt(e));
 			}
 		}
-		
-
-
-
+	
 		//get height for spacing purposes
 	
 		boolean resize = false;
@@ -462,8 +420,6 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 			}
 			repaint();
 		}
-		
-		
 	}
 
 
@@ -478,11 +434,8 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 		inOrder.setEnabled(true);
 		postOrder.setEnabled(true);
 		preOrder.setEnabled(true);
-
 		addNode.setEnabled(true);
 		delete.setEnabled(true);
-
-		
 	}
 
 
@@ -555,9 +508,9 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 	{
 		if(r==null)
 			return;
-			rOrderTraversal(r.getRight());
-			traversalToShow.add(r);
-			rOrderTraversal(r.getLeft());
+		rOrderTraversal(r.getRight());
+		traversalToShow.add(r);
+		rOrderTraversal(r.getLeft());
 	}
 
 	
@@ -590,9 +543,5 @@ public class TreeScreen extends JPanel implements ActionListener, ChangeListener
 		//refreshing
 		repaint();
 	}
-
-
-	
-
 }
 
