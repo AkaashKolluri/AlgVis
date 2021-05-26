@@ -52,4 +52,9 @@ public class MyNode
     {
         isLit = false;
     }
+
+	public boolean isLit()
+	{
+		return isLit;
+	}
 }

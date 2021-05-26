@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.util.*;
+
 import javax.swing.*;
 
 
@@ -24,8 +24,7 @@ public class Main
         HomeScreen h = new HomeScreen();
         c.add(h, "HomeScreen");
 
-        SortScreen s = new SortScreen();
-        c.add(s, "SortScreen");
+        
 
         TreeScreen t = new TreeScreen();
         c.add(t, "TreeScreen");
