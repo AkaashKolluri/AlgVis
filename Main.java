@@ -1,9 +1,5 @@
 import java.awt.*;
-
 import javax.swing.*;
-
-
-
 
 public class Main
 {
@@ -18,13 +14,10 @@ public class Main
         Container c  = j.getContentPane();
         c.setLayout(new CardLayout());
 
-        
-        
+
         //adding sort screens
         HomeScreen h = new HomeScreen();
         c.add(h, "HomeScreen");
-
-        
 
         TreeScreen t = new TreeScreen();
         c.add(t, "TreeScreen");
@@ -32,15 +25,12 @@ public class Main
         PathScreen p = new PathScreen();
         c.add(p, "PathScreen");
 
-    
-        
+
         //making the frame be the correct size visible, exitable
         j.setSize(width, height);
         j.setVisible(true);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     }
-
-
 
     public static void switchScreen(String name)
     {
@@ -49,6 +39,4 @@ public class Main
         CardLayout l = (CardLayout) (c.getLayout());
         l.show(c, name);
     }
-
-
 }
